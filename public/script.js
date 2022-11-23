@@ -8,41 +8,31 @@ CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
 const NUM_OF_ENEMIES = 100;
 const enemiesArray = [];
 
-// We want a factory function that will EVENTUALLY create many enemies for us
-// Let's start with 1 enemy and make sure we understand how it should behave 
-// This is "Polymorphism" concept of OOP 
-
-// enemy1 = {
-//   x: 0,
-//   y: 0,
-//   width: 200,
-//   height: 200,
-// }
-
 // ---- Enemy Factory Class
 class Enemy {
   constructor() {
-    this.x = Math.floor(Math.random() * 500); // random start loc
-    this.y = Math.floor(Math.random() * 1000); // random start loc
+    this.x = Math.floor(Math.random() * canvas.width); // random start loc
+    this.y = Math.floor(Math.random() * canvas.height); // random start loc
     this.width = Math.floor(Math.random() * 50); // random size
     this.height = Math.floor(Math.random() * 50); // random size
+    this.speed = Math.random() * 4 - 2 // this is actually a range between -2 to +2
+    // gens a random between 0 - 4, then we always -2
   }
   updateCoords() {
-    this.x++;
-    this.y++;
+    this.x += this.speed; // this creates random movement
+    this.y += this.speed; // this creates random movement
   }
   draw() {
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    // Multiple built in methods for different styles of basic rectangles to draw!
+    ctx.strokeRect(this.x, this.y, this.width, this.height); 
   }
 }
 
-// What if we want to generate multiple?
+// ---- Generate multiple enemies
 for (let i = 0; i < NUM_OF_ENEMIES; i++) {
   enemiesArray.push(new Enemy());
 }
-
-
-
+console.log("Enemies Array: ", enemiesArray);
 
 const animate = () => {
   // ---- Clears old "paint"
