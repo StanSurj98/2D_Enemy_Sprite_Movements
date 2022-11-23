@@ -3,22 +3,29 @@ const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
 
 // ---- Relevant Global Params
-CANVAS_WIDTH = canvas.width = 500;  // Ensure same as styles.css
+CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
 const NUM_OF_ENEMIES = 100;
 const enemiesArray = [];
+
+// ---- Sprite Resources
+const enemyImage = new Image();
+enemyImage.src = "./images/enemy1.png";
 
 // ---- Enemy Factory Class
 class Enemy {
   constructor() {
     // Random start location
-    this.x = Math.floor(Math.random() * canvas.width); 
+    this.x = Math.floor(Math.random() * canvas.width);
     this.y = Math.floor(Math.random() * canvas.height);
-    // Random enemy sizes
-    this.width = Math.floor(Math.random() * 50); 
-    this.height = Math.floor(Math.random() * 50);
+    // // Random enemy sizes
+    this.width = 100;
+    this.height = 100;
     // Variable movement speed, a range between -2 to 2
-    this.speed = Math.random() * 4 - 2 
+    this.speed = Math.random() * 4 - 2;
+    // ---- Sprite Sheets
+    this.spriteWidth = 293; // (Total img width) / (num of frames)
+    this.spriteHeight = 155;
   }
   updateCoords() {
     // Randomized movement in each axis relative to speed range
@@ -27,7 +34,24 @@ class Enemy {
   }
   draw() {
     // Multiple built in methods for different styles of basic rectangles to draw!
-    ctx.strokeRect(this.x, this.y, this.width, this.height); 
+    // ctx.strokeRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(
+      enemyImage,
+      // The next 4 lines are where we CROP the image from the entire sheet
+      // In this case, first frame ONLY, "from" (top-left 0, 0)...
+      // "draw until" 1 sprite's width & height...
+      0,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      // Next 4 lines are "Where do we DRAW that cropped frame?"
+      // In this case, "a random (x, y) starting point" on our canvas
+      // "Draw until maximum", the entire canvas width & height
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 }
 
@@ -45,10 +69,9 @@ const animate = () => {
   enemiesArray.forEach((enemy) => {
     enemy.draw();
     enemy.updateCoords();
-  })
-
+  });
 
   // ---- End of Func, recursion call
   requestAnimationFrame(animate);
-}
+};
 animate();
