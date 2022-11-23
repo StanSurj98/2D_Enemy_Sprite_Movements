@@ -7,6 +7,8 @@ CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
 const NUM_OF_ENEMIES = 100;
 const enemiesArray = [];
+let gameFrame = 0; // Global speed control of animations
+
 
 // ---- Sprite Resources
 const enemyImage = new Image();
@@ -20,33 +22,43 @@ class Enemy {
     this.y = Math.floor(Math.random() * canvas.height);
     // Variable movement speed, a range between -2 to 2
     this.speed = Math.random() * 4 - 2;
-    // ---- Sprite Sheets
+
+    // ---- Sprite Details
     this.spriteWidth = 293; // (Total img width) / (num of frames)
     this.spriteHeight = 155;
     // Size scaled to art
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
+    this.frame = 0; // Initial sprite frame from the entire sheet of 6 frames
   }
+
   updateCoords() {
     // Randomized movement in each axis relative to speed range
     this.x += this.speed;
     this.y += this.speed;
+
+    // Slows Down animation, only run frame update at specific gameFrames
+    if (gameFrame % 2 === 0) {
+      // Changing Sprite frames
+      this.frame > 4 ? this.frame = 0 : this.frame++;
+    }
+
   }
+
   draw() {
-    // Multiple built in methods for different styles of basic rectangles to draw!
-    // ctx.strokeRect(this.x, this.y, this.width, this.height);
     ctx.drawImage(
       enemyImage,
-      // The next 4 lines are where we CROP the image from the entire sheet
-      // In this case, first frame ONLY, "from" (top-left 0, 0)...
-      // "draw until" 1 sprite's width & height...
-      0,
+      // First 4 params are "where" to "CROP" image from entire sheet
+      // and "draw it until" 1 sprite's dimensions...
+
+      // Everytime sprite frame increases by 1, it crops to the next frame, animation
+      this.frame * this.spriteWidth, 
       0,
       this.spriteWidth,
       this.spriteHeight,
-      // Next 4 lines are "Where do we DRAW that cropped frame?"
-      // In this case, "a random (x, y) starting point" on our canvas
-      // "Draw until maximum", the entire canvas width & height
+      // Next 4 are "where" to "DRAW" the cropped image on canvas
+      // here: "a random (x, y) starting point" on canvas
+      // "Draw until maximum", the entire canvas dimensions
       this.x,
       this.y,
       this.width,
@@ -54,6 +66,7 @@ class Enemy {
     );
   }
 }
+
 
 // ---- Generate multiple enemies
 for (let i = 0; i < NUM_OF_ENEMIES; i++) {
@@ -70,6 +83,9 @@ const animate = () => {
     enemy.draw();
     enemy.updateCoords();
   });
+
+  // ---- Game Speed Control
+  gameFrame++;
 
   // ---- End of Func, recursion call
   requestAnimationFrame(animate);
