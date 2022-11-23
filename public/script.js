@@ -30,6 +30,8 @@ class Enemy {
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
     this.frame = 0; // Initial sprite frame from the entire sheet of 6 frames
+    // Allow each bats to have different "flap speed"
+    this.flapSpeed = Math.floor(Math.random() * 3 + 1); // Note the +1 is necessary 
   }
 
   updateCoords() {
@@ -38,7 +40,8 @@ class Enemy {
     this.y += this.speed;
 
     // Slows Down animation, only run frame update at specific gameFrames
-    if (gameFrame % 2 === 0) {
+    // The flapSpeed dictates the animation of each bat, so this randomizes them
+    if (gameFrame % this.flapSpeed === 0) {
       // Changing Sprite frames
       this.frame > 4 ? this.frame = 0 : this.frame++;
     }
