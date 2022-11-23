@@ -16,7 +16,7 @@ CANVAS_HEIGHT = canvas.height = 1000;
 //   height: 200,
 // }
 
-// Let's get programmatic and make an Enemy class so we can generate multiple
+// ---- Enemy Factory Class
 class Enemy {
   constructor(x, y, width, height) {
     // this.name = name,
@@ -35,14 +35,20 @@ class Enemy {
 }
 
 const enemy1 = new Enemy(10, 50, 100, 100);
-const enemy2 = new Enemy(70, 30, 175, 250);
+const enemy2 = new Enemy(70, 30, 175, 50);
 
 const animate = () => {
-  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT); // ensures we delete old paint at each recursion
+  // ---- Clears old "paint"
+  ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+  // ---- Calling our Enemy class methods
   enemy1.updateCoords();
   enemy1.draw();
   enemy2.updateCoords();
   enemy2.draw();
-  requestAnimationFrame(animate); // our handy recursion method
+
+
+  // ---- End of Func, recursion call
+  requestAnimationFrame(animate);
 }
 animate();
