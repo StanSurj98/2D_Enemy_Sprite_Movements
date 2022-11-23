@@ -1,9 +1,12 @@
 /** @type {HTMLCanvasElement} */ // Enables the VSCODE helper to realize it's a canvas project
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext("2d");
-// Make equal sizing as styles.css for init canvas
-CANVAS_WIDTH = canvas.width = 500;
-CANVAS_HEIGHT = canvas.height = 1000;
+
+// ---- Relevant Global Params
+CANVAS_WIDTH = canvas.width = 500;  // Ensure same as styles.css
+CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
+const NUM_OF_ENEMIES = 100;
+const enemiesArray = [];
 
 // We want a factory function that will EVENTUALLY create many enemies for us
 // Let's start with 1 enemy and make sure we understand how it should behave 
@@ -18,12 +21,11 @@ CANVAS_HEIGHT = canvas.height = 1000;
 
 // ---- Enemy Factory Class
 class Enemy {
-  constructor(x, y, width, height) {
-    // this.name = name,
-    this.x = x,
-    this.y = y,
-    this.width = width,
-    this.height = height
+  constructor() {
+    this.x = Math.floor(Math.random() * 500); // random start loc
+    this.y = Math.floor(Math.random() * 1000); // random start loc
+    this.width = Math.floor(Math.random() * 50); // random size
+    this.height = Math.floor(Math.random() * 50); // random size
   }
   updateCoords() {
     this.x++;
@@ -34,18 +36,23 @@ class Enemy {
   }
 }
 
-const enemy1 = new Enemy(10, 50, 100, 100);
-const enemy2 = new Enemy(70, 30, 175, 50);
+// What if we want to generate multiple?
+for (let i = 0; i < NUM_OF_ENEMIES; i++) {
+  enemiesArray.push(new Enemy());
+}
+
+
+
 
 const animate = () => {
   // ---- Clears old "paint"
   ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
   // ---- Calling our Enemy class methods
-  enemy1.updateCoords();
-  enemy1.draw();
-  enemy2.updateCoords();
-  enemy2.draw();
+  enemiesArray.forEach((enemy) => {
+    enemy.draw();
+    enemy.updateCoords();
+  })
 
 
   // ---- End of Func, recursion call
