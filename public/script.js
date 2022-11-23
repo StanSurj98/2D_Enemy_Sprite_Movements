@@ -12,40 +12,36 @@ let gameFrame = 0; // Global speed control of animations
 
 // ---- Enemy Factory Class
 class Enemy {
-  constructor(enemy) {
-    // Differentiate enemy images
+  constructor() {
     this.image = new Image();
-    // this.image.src = `./images/${enemy}.png`
     this.image.src = `./images/enemy1.png`
-    // Random start location
-    this.x = Math.floor(Math.random() * canvas.width);
-    this.y = Math.floor(Math.random() * canvas.height);
-    // Variable movement speed, a range between -2 to 2
-    this.speed = Math.random() * 4 - 2;
 
     // ---- Sprite Details
     this.spriteWidth = 293; // (Total img width) / (num of frames)
     this.spriteHeight = 155;
-    // Size scaled to art
+    // Size ON CANVAS is scaled from Source sprite sheet
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
-    this.frame = 0; // Initial sprite frame from the entire sheet of 6 frames
+    // Initial sprite frame from the entire sheet of 6 frames
+    this.frame = 0; 
     // Allow each bats to have different "flap speed"
-    this.flapSpeed = Math.floor(Math.random() * 3 + 1); // Note the +1 is necessary 
+    this.flapSpeed = Math.floor(Math.random() * 3 + 1); // Note the +1 is necessary
+    // Start location boxed into Canvas now | MUST have the brackets wrapping
+    this.x = Math.random() * (canvas.width - this.width); 
+    this.y = Math.random() * (canvas.height - this.height);
   }
 
   updateCoords() {
-    // Randomized movement in each axis relative to speed range
-    this.x += this.speed;
-    this.y += this.speed;
+    // Randomized bouncing movement now
+    this.x += Math.random() * 5 - 2.5;
+    this.y += Math.random() * 5 - 2.5;
 
-    // Slows Down animation, only run frame update at specific gameFrames
+    // "Slows Down Animation" - only run frame update at specific gameFrames
     // The flapSpeed dictates the animation of each bat, so this randomizes them
     if (gameFrame % this.flapSpeed === 0) {
-      // Changing Sprite frames
+      // Animating Sprite frames
       this.frame > 4 ? this.frame = 0 : this.frame++;
     }
-
   }
 
   draw() {
