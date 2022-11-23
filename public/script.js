@@ -10,13 +10,13 @@ const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
 
-// ---- Sprite Resources
-const enemyImage = new Image();
-enemyImage.src = "./images/enemy1.png";
-
 // ---- Enemy Factory Class
 class Enemy {
-  constructor() {
+  constructor(enemy) {
+    // Differentiate enemy images
+    this.image = new Image();
+    // this.image.src = `./images/${enemy}.png`
+    this.image.src = `./images/enemy1.png`
     // Random start location
     this.x = Math.floor(Math.random() * canvas.width);
     this.y = Math.floor(Math.random() * canvas.height);
@@ -50,7 +50,7 @@ class Enemy {
 
   draw() {
     ctx.drawImage(
-      enemyImage,
+      this.image,
       // First 4 params are "where" to "CROP" image from entire sheet
       // and "draw it until" 1 sprite's dimensions...
 
