@@ -11,16 +11,19 @@ const enemiesArray = [];
 // ---- Enemy Factory Class
 class Enemy {
   constructor() {
-    this.x = Math.floor(Math.random() * canvas.width); // random start loc
-    this.y = Math.floor(Math.random() * canvas.height); // random start loc
-    this.width = Math.floor(Math.random() * 50); // random size
-    this.height = Math.floor(Math.random() * 50); // random size
-    this.speed = Math.random() * 4 - 2 // this is actually a range between -2 to +2
-    // gens a random between 0 - 4, then we always -2
+    // Random start location
+    this.x = Math.floor(Math.random() * canvas.width); 
+    this.y = Math.floor(Math.random() * canvas.height);
+    // Random enemy sizes
+    this.width = Math.floor(Math.random() * 50); 
+    this.height = Math.floor(Math.random() * 50);
+    // Variable movement speed, a range between -2 to 2
+    this.speed = Math.random() * 4 - 2 
   }
   updateCoords() {
-    this.x += this.speed; // this creates random movement
-    this.y += this.speed; // this creates random movement
+    // Randomized movement in each axis relative to speed range
+    this.x += this.speed;
+    this.y += this.speed;
   }
   draw() {
     // Multiple built in methods for different styles of basic rectangles to draw!
