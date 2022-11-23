@@ -14,11 +14,11 @@ let gameFrame = 0; // Global speed control of animations
 class Enemy {
   constructor() {
     this.image = new Image();
-    this.image.src = `./images/enemy1.png`
-
+    this.image.src = `./images/enemy2.png`
+    this.speed = Math.random() * 4 + 1; // Random speed 1-5
     // ---- Sprite Details
-    this.spriteWidth = 293; // (Total img width) / (num of frames)
-    this.spriteHeight = 155;
+    this.spriteWidth = 266; // (Total img width) / (num of frames)
+    this.spriteHeight = 188;
     // Size ON CANVAS is scaled from Source sprite sheet
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
@@ -32,14 +32,16 @@ class Enemy {
   }
 
   updateCoords() {
-    // Randomized bouncing movement now
-    this.x += Math.random() * 5 - 2.5;
-    this.y += Math.random() * 5 - 2.5;
+    // This type of enemy should fly to one direction
+    this.x -= this.speed;
+    // this.y += Math.random() * 5 - 2.5; 
+    // Position Reset
+    if (this.x < -CANVAS_WIDTH) {
+      this.x = Math.random() * (canvas.width - this.width);
+    }
 
-    // "Slows Down Animation" - only run frame update at specific gameFrames
-    // The flapSpeed dictates the animation of each bat, so this randomizes them
+    // Animates sprites at certain frames only
     if (gameFrame % this.flapSpeed === 0) {
-      // Animating Sprite frames
       this.frame > 4 ? this.frame = 0 : this.frame++;
     }
   }
