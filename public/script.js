@@ -18,14 +18,14 @@ class Enemy {
     // Random start location
     this.x = Math.floor(Math.random() * canvas.width);
     this.y = Math.floor(Math.random() * canvas.height);
-    // // Random enemy sizes
-    this.width = 100;
-    this.height = 100;
     // Variable movement speed, a range between -2 to 2
     this.speed = Math.random() * 4 - 2;
     // ---- Sprite Sheets
     this.spriteWidth = 293; // (Total img width) / (num of frames)
     this.spriteHeight = 155;
+    // Size scaled to art
+    this.width = this.spriteWidth / 2.5;
+    this.height = this.spriteHeight / 2.5;
   }
   updateCoords() {
     // Randomized movement in each axis relative to speed range
