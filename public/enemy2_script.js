@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 // ---- Relevant Global Params
 CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
-const NUM_OF_ENEMIES = 100;
+const NUM_OF_ENEMIES = 50;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
@@ -29,16 +29,20 @@ class Enemy {
     // Start location boxed into Canvas now | MUST have the brackets wrapping
     this.x = Math.random() * (canvas.width - this.width); 
     this.y = Math.random() * (canvas.height - this.height);
+
+    // ---- Let's explore Sine waves Movement using some Trig
+    this.angle = 0; // Initial sine wave size and where the enemy appears in the wave
+    this.angleSpeed = Math.random() * 0.2; // Random variety to wave size for each enemy
   }
 
   updateCoords() {
     // This type of enemy should fly to one direction
     this.x -= this.speed;
-    // this.y += Math.random() * 5 - 2.5; 
-    // Position Reset
-    if (this.x < -CANVAS_WIDTH) {
-      this.x = Math.random() * (canvas.width - this.width);
-    }
+    this.y += Math.sin(this.angle);
+    this.angle += this.angleSpeed; // Now that each instance responds to a random angle, each enemy has its own sine wave movement randomized
+    // Position Reset 
+    if (this.x + this.width < 0) this.x = canvas.width;
+    // if ENTIRE sprite is gone from canvas to left, reset x to JUST the right of canvas
 
     // Animates sprites at certain frames only
     if (gameFrame % this.flapSpeed === 0) {
