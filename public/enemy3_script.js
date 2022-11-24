@@ -38,10 +38,10 @@ class Enemy {
   updateCoords() {
     // Circular movement achieved with Sin for Horizontal & Cos for Vertical
     this.x =
-      this.curve * Math.sin((this.angle * Math.PI) / 270) +
+      this.curve * Math.sin((this.angle * Math.PI) / 180) +
       (canvas.width / 2 - this.width / 2);
     this.y =
-      this.curve * Math.cos((this.angle * Math.PI) / 360) +
+      this.curve * Math.cos((this.angle * Math.PI) / 180) +
       (canvas.height / 2 - this.height / 2);
     // Angle get's increased so each enemy has variable waves
     this.angle += this.angleSpeed;
