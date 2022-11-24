@@ -9,14 +9,11 @@ const NUM_OF_ENEMIES = 20;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
-// For Wave Cycle Ratios
-// Keeping these the same values == circular movement of sine & cosine
-// Play around with changing their values to get more interesting wave movements
-// The reason they are ratios is because y and x here work together, better patterns if they're divisible too
-// for example at x: 720 and y: 180 - there will be 4 sin waves of the horizontal movement for each 1 full cos wave of vertical movement
-// this is because 720 / 180 = 4
-xRatio = 90; // the smaller the value, the faster we go
-yRatio = 90;
+// ---- Wave Cycle Ratios
+// IF equal x && y => circular movement of sine & cosine
+// Sin & Cos complements each other in a circular pattern, so feel free to play around
+xRatio = 90;
+yRatio = 360; // 4 cos waves for every 1 sin wave - goes side to side faster but slow up and down
 
 // ---- Enemy Factory Class
 class Enemy {
