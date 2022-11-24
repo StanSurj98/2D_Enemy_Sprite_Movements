@@ -34,28 +34,27 @@ class Enemy {
     // Start location boxed into Canvas now | MUST have the brackets wrapping
     this.x = Math.random() * (canvas.width - this.width);
     this.y = Math.random() * (canvas.height - this.height);
-
-    // ---- Let's explore Sine waves Movement using some Trig
-    this.angle = Math.random() * 100; // Initial enemy position in the wave
-    this.angleSpeed = Math.random() * 5 + 1; // The + here is just a constant min
-    
-    // Curve = technically "magnitude" of each wave, "peaks & valleys"
-    // BUT "Radius" in this "circular" pattern, since we use sin & cos TOGETHER
-    // this.curve = Math.random() * 200 + 75; // 75px = min radius + random
+    this.newX = Math.random() * (canvas.width - this.width);
+    this.newY = Math.random() * (canvas.height - this.height);
   }
 
   updateCoords() {
-    // Circular movement achieved with Sin for Horizontal & Cos for Vertical waves
-    this.x =
-    // making sure that (canvas.width|height / 2), because we want radius
-      (canvas.width/2) * Math.sin((this.angle * Math.PI) / xRatio) +
-      (canvas.width / 2 - this.width / 2); // These are just to center on canvas
-    this.y =
-      (canvas.height/2) * Math.cos((this.angle * Math.PI) / yRatio) +
-      (canvas.height / 2 - this.height / 2); // These are just to center on canvas
+    // This next enemy movement pattern is "Pulsing Locations"
 
-    // Angle get's increased so each enemy has variable waves
-    this.angle += this.angleSpeed;
+
+    // Every "g" frames...
+    if (gameFrame % 60 === 0) {
+      // Reset new X,Y to random position on canvas
+      this.newX = Math.random() * (canvas.width - this.width);
+      this.newY = Math.random() * (canvas.height - this.height);
+    }
+    // Distance from x,y axis between current position and new position
+    let dx = this.x - this.newX;
+    let dy = this.y - this.newY;
+    // Make sprites move to new location
+    this.x -= dx / 50; // constant what makes it "non-instant"
+    this.y -= dy / 50; // moves to new location by n^th of their distance every g frames above
+
 
     // ---- Position Reset
     if (this.x + this.width < 0) this.x = canvas.width;
