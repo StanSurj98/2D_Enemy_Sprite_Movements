@@ -47,6 +47,7 @@ class Enemy {
   updateCoords() {
     // Circular movement achieved with Sin for Horizontal & Cos for Vertical waves
     this.x =
+    // making sure that (canvas.width|height / 2), because we want radius
       (canvas.width/2) * Math.sin((this.angle * Math.PI) / xRatio) +
       (canvas.width / 2 - this.width / 2); // These are just to center on canvas
     this.y =
