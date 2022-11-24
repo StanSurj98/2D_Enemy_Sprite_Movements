@@ -19,11 +19,11 @@ yRatio = 880;
 class Enemy {
   constructor() {
     this.image = new Image();
-    this.image.src = `./images/enemy3.png`;
+    this.image.src = `./images/enemy4.png`;
     this.speed = Math.random() * 4 + 1; // Random speed 1-5
     // ---- Sprite Details
-    this.spriteWidth = 218; // (Total img width) / (num of frames)
-    this.spriteHeight = 177;
+    this.spriteWidth = 213; // (Total img width) / (num of frames)
+    this.spriteHeight = 213;
     // Size ON CANVAS is scaled from Source sprite sheet
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
@@ -36,15 +36,18 @@ class Enemy {
     this.y = Math.random() * (canvas.height - this.height);
     this.newX = Math.random() * (canvas.width - this.width);
     this.newY = Math.random() * (canvas.height - this.height);
+    // The interval at which new positions calc'd, this way it's randomized for each enemy
+    this.interval = Math.floor(Math.random() * 200 + 50); // 50 is just constant min
+    // Must wrap in Math.floor() since we're using it for modulo === 0
   }
 
   updateCoords() {
     // This next enemy movement pattern is "Pulsing Locations"
 
 
-    // Every "g" frames...
-    if (gameFrame % 60 === 0) {
-      // Reset new X,Y to random position on canvas
+    // Every "i" frames... Each enemy has random occurences of mvmt
+    if (gameFrame % this.interval === 0) {
+      // Calculate new X,Y to random position on canvas
       this.newX = Math.random() * (canvas.width - this.width);
       this.newY = Math.random() * (canvas.height - this.height);
     }
