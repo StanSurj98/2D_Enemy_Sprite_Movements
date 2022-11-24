@@ -5,15 +5,15 @@ const ctx = canvas.getContext("2d");
 // ---- Relevant Global Params
 CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
-const NUM_OF_ENEMIES = 20;
+const NUM_OF_ENEMIES = 200;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
 // ---- Wave Cycle Ratios
 // IF equal x && y => circular movement of sine & cosine
 // Sin & Cos complements each other in a circular pattern, so feel free to play around
-xRatio = 90;
-yRatio = 270;
+xRatio = 200;
+yRatio = 700;
 
 // ---- Enemy Factory Class
 class Enemy {
@@ -36,8 +36,8 @@ class Enemy {
     this.y = Math.random() * (canvas.height - this.height);
 
     // ---- Let's explore Sine waves Movement using some Trig
-    this.angle = 0; // Initial enemy position in the wave
-    this.angleSpeed = Math.random() * 2 + 1; // The + here is just a constant min
+    this.angle = Math.random() * 100; // Initial enemy position in the wave
+    this.angleSpeed = Math.random() * 5 + 1; // The + here is just a constant min
     
     // Curve = technically "magnitude" of each wave, "peaks & valleys"
     // BUT "Radius" in this "circular" pattern, since we use sin & cos TOGETHER
