@@ -32,16 +32,15 @@ class Enemy {
 
     // ---- Let's explore Sine waves Movement using some Trig
     this.angle = 0; // Initial enemy position in the wave
-    this.angleSpeed = Math.random() * 0.2; // Wave "length" for each enemy mvmt
-    this.curve = Math.random() * 7; // Wave "magnitude" - the peaks & valleys
+    this.angleSpeed = Math.random() * 2; // Wave "length" for each enemy mvmt
+    this.curve = Math.random() * 200; // Math.sin() returns num between -200 and 200
   }
 
   updateCoords() {
-    // This enemy flies to the left
-    this.x -= this.speed;
-    // Each enemy has a variable wave magnitude and movement
-    this.y += this.curve * Math.sin(this.angle);
-    // Making sure each enemy's angle isn't just 0 and can be variable
+    // Enemy 3 should explore side to side wave movement
+    // the sine wave for side to side mvmt      |      the starting middle position
+    this.x = this.curve * Math.sin(this.angle * Math.PI/180) + (canvas.width/2 - this.width/2);
+    // this.y += this.curve * Math.sin(this.angle);
     this.angle += this.angleSpeed;
 
 
