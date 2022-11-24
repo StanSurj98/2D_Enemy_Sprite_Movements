@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 // ---- Relevant Global Params
 CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
-const NUM_OF_ENEMIES = 100;
+const NUM_OF_ENEMIES = 30;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
