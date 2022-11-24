@@ -41,16 +41,16 @@ class Enemy {
     
     // Curve = technically "magnitude" of each wave, "peaks & valleys"
     // BUT "Radius" in this "circular" pattern, since we use sin & cos TOGETHER
-    this.curve = Math.random() * 200 + 75; // 75px = min radius + random
+    // this.curve = Math.random() * 200 + 75; // 75px = min radius + random
   }
 
   updateCoords() {
     // Circular movement achieved with Sin for Horizontal & Cos for Vertical waves
     this.x =
-      this.curve * Math.sin((this.angle * Math.PI) / xRatio) +
+      (canvas.width/2) * Math.sin((this.angle * Math.PI) / xRatio) +
       (canvas.width / 2 - this.width / 2); // These are just to center on canvas
     this.y =
-      this.curve * Math.cos((this.angle * Math.PI) / yRatio) +
+      (canvas.height/2) * Math.cos((this.angle * Math.PI) / yRatio) +
       (canvas.height / 2 - this.height / 2); // These are just to center on canvas
 
     // Angle get's increased so each enemy has variable waves
