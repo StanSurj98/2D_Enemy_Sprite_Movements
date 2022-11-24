@@ -9,12 +9,11 @@ const NUM_OF_ENEMIES = 20;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
-
 // ---- Enemy Factory Class
 class Enemy {
   constructor() {
     this.image = new Image();
-    this.image.src = `./images/enemy3.png`
+    this.image.src = `./images/enemy3.png`;
     this.speed = Math.random() * 4 + 1; // Random speed 1-5
     // ---- Sprite Details
     this.spriteWidth = 218; // (Total img width) / (num of frames)
@@ -23,11 +22,11 @@ class Enemy {
     this.width = this.spriteWidth / 2.5;
     this.height = this.spriteHeight / 2.5;
     // Initial sprite frame from the entire sheet of 6 frames
-    this.frame = 0; 
+    this.frame = 0;
     // Allow each bats to have different "flap speed"
     this.flapSpeed = Math.floor(Math.random() * 3 + 1); // Note the +1 is necessary
     // Start location boxed into Canvas now | MUST have the brackets wrapping
-    this.x = Math.random() * (canvas.width - this.width); 
+    this.x = Math.random() * (canvas.width - this.width);
     this.y = Math.random() * (canvas.height - this.height);
 
     // ---- Let's explore Sine waves Movement using some Trig
@@ -37,20 +36,23 @@ class Enemy {
   }
 
   updateCoords() {
-    // Enemy 3 should explore side to side wave movement
-    // the sine wave for side to side mvmt      |      the starting middle position
-    this.x = this.curve * Math.sin(this.angle * Math.PI/180) + (canvas.width/2 - this.width/2);
-    // this.y += this.curve * Math.sin(this.angle);
+    // Circular movement achieved with Sin for Horizontal & Cos for Vertical
+    this.x =
+      this.curve * Math.sin((this.angle * Math.PI) / 180) +
+      (canvas.width / 2 - this.width / 2);
+    this.y =
+      this.curve * Math.cos((this.angle * Math.PI) / 180) +
+      (canvas.height / 2 - this.height / 2);
+    // Angle get's increased so each enemy has variable waves
     this.angle += this.angleSpeed;
 
-
-    // ---- Position Reset 
+    // ---- Position Reset
     if (this.x + this.width < 0) this.x = canvas.width;
     // when ENTIRE sprite out of canvas to left, respawn immediate right of canvas
 
     // Animates sprites at certain frames only
     if (gameFrame % this.flapSpeed === 0) {
-      this.frame > 4 ? this.frame = 0 : this.frame++;
+      this.frame > 4 ? (this.frame = 0) : this.frame++;
     }
   }
 
@@ -61,7 +63,7 @@ class Enemy {
       // and "draw it until" 1 sprite's dimensions...
 
       // Everytime sprite frame increases by 1, it crops to the next frame, animation
-      this.frame * this.spriteWidth, 
+      this.frame * this.spriteWidth,
       0,
       this.spriteWidth,
       this.spriteHeight,
@@ -75,7 +77,6 @@ class Enemy {
     );
   }
 }
-
 
 // ---- Generate multiple enemies
 for (let i = 0; i < NUM_OF_ENEMIES; i++) {
