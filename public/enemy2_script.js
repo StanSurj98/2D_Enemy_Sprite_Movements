@@ -5,7 +5,7 @@ const ctx = canvas.getContext("2d");
 // ---- Relevant Global Params
 CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
-const NUM_OF_ENEMIES = 50;
+const NUM_OF_ENEMIES = 20;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
@@ -31,18 +31,23 @@ class Enemy {
     this.y = Math.random() * (canvas.height - this.height);
 
     // ---- Let's explore Sine waves Movement using some Trig
-    this.angle = 0; // Initial sine wave size and where the enemy appears in the wave
-    this.angleSpeed = Math.random() * 0.2; // Random variety to wave size for each enemy
+    this.angle = 0; // Initial enemy position in the wave
+    this.angleSpeed = Math.random() * 0.2; // Wave "length" for each enemy mvmt
+    this.curve = Math.random() * 7; // Wave "magnitude" - the peaks & valleys
   }
 
   updateCoords() {
-    // This type of enemy should fly to one direction
+    // This enemy flies to the left
     this.x -= this.speed;
-    this.y += Math.sin(this.angle);
-    this.angle += this.angleSpeed; // Now that each instance responds to a random angle, each enemy has its own sine wave movement randomized
-    // Position Reset 
+    // Each enemy has a variable wave magnitude and movement
+    this.y += this.curve * Math.sin(this.angle);
+    // Making sure each enemy's angle isn't just 0 and can be variable
+    this.angle += this.angleSpeed;
+
+
+    // ---- Position Reset 
     if (this.x + this.width < 0) this.x = canvas.width;
-    // if ENTIRE sprite is gone from canvas to left, reset x to JUST the right of canvas
+    // when ENTIRE sprite out of canvas to left, respawn immediate right of canvas
 
     // Animates sprites at certain frames only
     if (gameFrame % this.flapSpeed === 0) {
