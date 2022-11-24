@@ -9,6 +9,15 @@ const NUM_OF_ENEMIES = 20;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
+// For Wave Cycle Ratios
+// Keeping these the same values == circular movement of sine & cosine
+// Play around with changing their values to get more interesting wave movements
+// The reason they are ratios is because y and x here work together, better patterns if they're divisible too
+// for example at x: 720 and y: 180 - there will be 4 sin waves of the horizontal movement for each 1 full cos wave of vertical movement
+// this is because 720 / 180 = 4
+xRatio = 720
+yRatio = 180
+
 // ---- Enemy Factory Class
 class Enemy {
   constructor() {
@@ -31,18 +40,19 @@ class Enemy {
 
     // ---- Let's explore Sine waves Movement using some Trig
     this.angle = 0; // Initial enemy position in the wave
-    this.angleSpeed = Math.random() * 2; // Wave "length" for each enemy mvmt
-    this.curve = Math.random() * 200; // Math.sin() returns num between -200 and 200
+    this.angleSpeed = Math.random() * 2 + 0.5; // The + here is just a constant min
+    this.curve = Math.random() * 200 + 50; // "Radius" of this circle movement pattern
   }
 
   updateCoords() {
-    // Circular movement achieved with Sin for Horizontal & Cos for Vertical
+    // Circular movement achieved with Sin for Horizontal & Cos for Vertical waves
     this.x =
-      this.curve * Math.sin((this.angle * Math.PI) / 180) +
-      (canvas.width / 2 - this.width / 2);
+      this.curve * Math.sin((this.angle * Math.PI) / xRatio) + 
+      (canvas.width / 2 - this.width / 2); // These are just to center on canvas
     this.y =
-      this.curve * Math.cos((this.angle * Math.PI) / 180) +
+      this.curve * Math.cos((this.angle * Math.PI) / yRatio) +
       (canvas.height / 2 - this.height / 2);
+
     // Angle get's increased so each enemy has variable waves
     this.angle += this.angleSpeed;
 
