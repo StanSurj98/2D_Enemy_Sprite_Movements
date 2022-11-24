@@ -13,7 +13,7 @@ let gameFrame = 0; // Global speed control of animations
 // IF equal x && y => circular movement of sine & cosine
 // Sin & Cos complements each other in a circular pattern, so feel free to play around
 xRatio = 90;
-yRatio = 360; // 4 cos waves for every 1 sin wave - goes side to side faster but slow up and down
+yRatio = 270;
 
 // ---- Enemy Factory Class
 class Enemy {
@@ -38,7 +38,10 @@ class Enemy {
     // ---- Let's explore Sine waves Movement using some Trig
     this.angle = 0; // Initial enemy position in the wave
     this.angleSpeed = Math.random() * 2 + 1; // The + here is just a constant min
-    this.curve = Math.random() * 200 + 75; // "Radius" of this circle movement pattern, minimum 75px
+    
+    // Curve = technically "magnitude" of each wave, "peaks & valleys"
+    // BUT "Radius" in this "circular" pattern, since we use sin & cos TOGETHER
+    this.curve = Math.random() * 200 + 75; // 75px = min radius + random
   }
 
   updateCoords() {
