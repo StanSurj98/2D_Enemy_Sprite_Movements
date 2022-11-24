@@ -5,15 +5,15 @@ const ctx = canvas.getContext("2d");
 // ---- Relevant Global Params
 CANVAS_WIDTH = canvas.width = 500; // Ensure same as styles.css
 CANVAS_HEIGHT = canvas.height = 1000; // Ensure same as styles.css
-const NUM_OF_ENEMIES = 200;
+const NUM_OF_ENEMIES = 25;
 const enemiesArray = [];
 let gameFrame = 0; // Global speed control of animations
 
 // ---- Wave Cycle Ratios
 // IF equal x && y => circular movement of sine & cosine
 // Sin & Cos complements each other in a circular pattern, so feel free to play around
-xRatio = 200;
-yRatio = 700;
+xRatio = 540;
+yRatio = 880;
 
 // ---- Enemy Factory Class
 class Enemy {
